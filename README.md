@@ -3,5 +3,4 @@ Este script automatiza o download e processamento de dados financeiros de empres
 
 O objetivo do Trabalho academico é Desenvolver um pipeline automatizado para realizar o download de dados de ações da B3 (Bolsa de Valores do Brasil) e armazená-los em um banco de dados PostgreSQL.
 
-
-
+![image](https://github.com/otavio-schmieleski/Pipeline_Python/assets/106122377/a0eb57b9-d221-4381-94cb-319df036a83c)
