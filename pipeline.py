@@ -57,9 +57,9 @@ def data_processing(root_file):
 #CONECTANDO COM O BANCO DE DADOS
 conn = psycopg2.connect(
     host="localhost",
-    database="Mercado_Financeiro",
+    database="Acoes_b3",
     user="postgres",
-    password="INSIRA SUA SENHA",
+    password="# INSIRA SUA SENHA DE ACESSO AO BANCO DE DADOS",
     port="5432"
 )
     
@@ -73,7 +73,7 @@ def create_table(name, name_file):
             low NUMERIC,
             close NUMERIC,
             adj_close NUMERIC,
-            volume BIGINT
+            volume FLOAT
         )
 
     """
@@ -106,4 +106,4 @@ for name in list_name:
 
 # CHAMANDO A FUNCAO PARA CRIAR AS TABELAS DE ACORDO COM OS TITULOS
 for name in list_name:
-    create_table(name.split('.')[0], name.split('\n')[0])    
+    create_table(name.split('\n')[0].replace('.','_'), name.split('\n')[0])    
