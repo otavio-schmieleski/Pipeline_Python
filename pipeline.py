@@ -5,11 +5,15 @@ import os
 import shutil
 import psycopg2
 import pandas as pd
+from pathlib import Path
+
+root = Path(__file__).parent
+
 
 # CAMINHO DAS PASTAS PARA OS ARQUIVOS
 ROOT_ORIGIN = "C://Users//otavi//Downloads"
-ROOT_DESTINY = "C://Users//otavi//OneDrive//Documentos//Desenvolvimento//Python//Pipeline_Python//CSV"
-ROOT_COMPANY_NAMES = "C://Users//otavi//OneDrive//Documentos//Desenvolvimento//Python//Pipeline_Python//Company_names.csv"
+ROOT_DESTINY = Path(__file__).parent / 'CSV'
+ROOT_COMPANY_NAMES = Path(__file__).parent / 'Company_names.csv'
 list_name = []
 
 # OBTENDO O NOME DOS TITULOS DAS EMPRESAS
@@ -46,7 +50,7 @@ def move_file(root_origin,root_destiny):
 # TRATAMENTO DOS DADOS
 def data_processing(root_file):
     root_file_path = f'.//CSV//{root_file}.csv'
-    bd = pd.read_csv('CSV//EGIE3.SA.csv')
+    bd = pd.read_csv(root_file_path)
     bd.dropna(inplace=True)
     bd.to_csv(root_file_path,index=False)
 
@@ -89,10 +93,6 @@ def create_table(name, name_file):
     ROOT_FILE_PATH = f'.//CSV//{name_file}.csv'
     load_data(cur,ROOT_FILE_PATH)
 
-
-
-
-
 # CHAMANDO A FUNCAO PARA FAZER DOWLOAND DOS TITULOS AUTOMATICAMENTE PASSANDO OS NOMES
 for name in list_name:
     dowloand_titulos(name)
@@ -100,11 +100,10 @@ for name in list_name:
 # CHAMANDO A FUNCAO MOVER TITULO PARA MOVER OS TITULOS PARA A PASTA DESTINO
 move_file(ROOT_ORIGIN,ROOT_DESTINY)
 
+# PROCESSANDO OS DADDOS PARA EXCLUIR OS NULL
 for name in list_name:
     data_processing(name.split('\n')[0])
 
 # CHAMANDO A FUNCAO PARA CRIAR AS TABELAS DE ACORDO COM OS TITULOS
 for name in list_name:
-    create_table(name.split('.')[0], name.split('\n')[0])
-    
-    
+    create_table(name.split('.')[0], name.split('\n')[0])    
